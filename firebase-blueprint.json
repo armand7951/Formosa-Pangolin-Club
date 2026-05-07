@@ -1,0 +1,65 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Club member profile",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "membershipLevel": { "type": "string", "enum": ["Standard", "Prestige", "Founding"] },
+        "bio": { "type": "string" },
+        "joinedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Itinerary": {
+      "title": "Itinerary",
+      "description": "Luxury villa travel itinerary",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "location": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "images": { "type": "array", "items": { "type": "string" } },
+        "maxGuests": { "type": "number" },
+        "startDate": { "type": "string", "format": "date-time" },
+        "endDate": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["Upcoming", "Full", "Completed"] }
+      },
+      "required": ["title", "location", "price"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Member booking for an itinerary",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "itineraryId": { "type": "string" },
+        "guestCount": { "type": "number" },
+        "status": { "type": "string", "enum": ["Pending", "Confirmed", "Cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "itineraryId", "guestCount"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/itineraries/{itineraryId}": {
+      "schema": "Itinerary",
+      "description": "Luxury itineraries"
+    },
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Member bookings"
+    }
+  }
+}
